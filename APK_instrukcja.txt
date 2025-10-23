@@ -1,0 +1,6 @@
+Instrukcja budowy APK z HTML:
+
+1. Otwórz Android Studio i utwórz nowy projekt (Empty Activity).
+2. Skopiuj folder z plikami HTML i grafikami do katalogu 'assets'.
+3. W MainActivity użyj WebView aby załadować 'index.html'.
+4. Build > Build APK.

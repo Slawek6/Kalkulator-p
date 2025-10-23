@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Kalkulator Półek</title>
+<style>
+body { font-family: Arial, sans-serif; margin: 20px; }
+input, button { font-size: 16px; padding: 5px; margin: 5px; }
+#wizualizacja { position: relative; height: 400px; border: 1px solid #333; margin-top: 10px; }
+.polka { position: absolute; left: 20px; width: calc(100%-40px); background-color: #007bff; }
+.etykieta { position: absolute; color: red; font-weight: bold; font-size: 14px; text-align: center; }
+</style>
+</head>
+<body>
+<h2>Kalkulator Półek</h2>
+<label>Wysokość szafki (mm):</label><input type="number" id="wysokosc">
+<label>Liczba półek:</label><input type="number" id="iloscPolek">
+<label>Grubość półki (mm):</label><input type="number" id="grubosc">
+<button onclick="oblicz()">Oblicz</button>
+<div id="wynik"></div>
+<div id="wizualizacja"></div>
+<script>
+function oblicz() {
+    const H=parseFloat(document.getElementById('wysokosc').value);
+    const n=parseInt(document.getElementById('iloscPolek').value);
+    const t=parseFloat(document.getElementById('grubosc').value);
+    const margines=36;
+    if(!H||!n||!t){alert("Wpisz poprawne dane"); return;}
+    const dostepna=H-margines;
+    const rozstaw=(dostepna-n*t)/(n+1);
+    if(rozstaw<0){alert("Za dużo półek lub za grube półki"); return;}
+    let aktualna=rozstaw;
+    const wiz=document.getElementById('wizualizacja'); wiz.innerHTML="";
+    for(let i=0;i<n;i++){
+        const polka=document.createElement('div');
+        polka.className='polka'; polka.style.height=(t*400/H)+'px';
+        polka.style.top=(400-(aktualna+t)*400/H)+'px';
+        wiz.appendChild(polka);
+        const etykieta=document.createElement('div');
+        etykieta.className='etykieta'; etykieta.style.top=(400-(aktualna)*400/H+4)+'px';
+        etykieta.style.left='50%'; etykieta.style.transform='translateX(-50%)';
+        etykieta.innerHTML=Math.round(aktualna)+' mm';
+        wiz.appendChild(etykieta);
+        aktualna+=t+rozstaw;
+    }
+}
+</script>
+</body>
+</html>
